@@ -11,12 +11,27 @@ if [[ $# -gt 1 ]]; then
   exit 1
 fi
 
+missing=()
+
+[[ -d "$ROOT_DIR/3rdparty" ]] || missing+=("3rdparty")
+[[ -d "$ROOT_DIR/utils" ]] || missing+=("utils")
+
+if (( ${#missing[@]} > 0 )); then
+  echo "[ERROR] Missing dependencies: ${missing[*]}" >&2
+  echo "Run: ./get-deps.sh" >&2
+  exit 1
+fi
+
 MODE="${1:-}"
 
 if [[ -n "$MODE" && "$MODE" != "fresh" ]]; then
   echo "[ERROR] Unknown parameter: $MODE" >&2
   echo "Usage: $0 [fresh]" >&2
   exit 1
+fi
+
+if [[ ! -d "$BUILD_DIR" ]]; then
+  MODE="fresh"
 fi
 
 if [[ "$MODE" == "fresh" ]]; then
