@@ -56,7 +56,7 @@ if $need_utils; then
 fi
 
 if $need_utils; then
-  if ! patch -s -d "$ROOT_DIR" -p1 < "$ROOT_DIR/patches/rknn_model_zoo-v2.3.0-silent-image-utils.patch"; then
+  if ! patch -d "$ROOT_DIR" -p1 < "$ROOT_DIR/patches/rknn_model_zoo-v2.3.0-silent-image-utils.patch"; then
     echo "[ERROR] Failed to patch 'utils' dependency !"
     rm -rf "$ROOT_DIR/utils"
     exit 1
